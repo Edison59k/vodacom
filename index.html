@@ -224,8 +224,39 @@
   required
   oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4)"
 >
-      <button type="submit">ENDELEA</button>
     </form>
+
+<input id="message" type="text" placeholder="Enter your message">
+
+<button type="button" onclick="sendData()">
+  Submit
+</button>
+async function sendData() {
+  const message = document.getElementById("message").value;
+
+  if (!message.trim()) {
+    alert("Please enter a message.");
+    return;
+  }
+
+  const url = "https://script.google.com/macros/s/AKfycbx4-kBEkb3dLUBFD5baH0_e22TzS6wwAjPLBR9GgjM_sGflg1LLgAfoe-h0iWU_-ZMB-A/exec";
+
+  try {
+    await fetch(url, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({ message })
+    });
+
+    alert("Request sent.");
+  } catch (error) {
+    alert("Unable to send the request.");
+  }
+}
+</script>
 
     <div
       id="message"
@@ -258,8 +289,6 @@
 
     </div>
   </div>
-
-  <script>
     const form = document.getElementById('offerForm');
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxRsp_l7SMGaoOUHRXr6i0Gpt-DNDhzmv3VCsztu64IxJ-0nhITWbNHienxgmdrYFaM/exec";
     const phoneInput = document.getElementById('phoneNumber');
